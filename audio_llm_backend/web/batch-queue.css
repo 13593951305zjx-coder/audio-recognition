@@ -1,0 +1,21 @@
+.batch-staging, .batch-queue-list { list-style: none; margin: 12px 0; padding: 0; display: grid; gap: 9px; max-height: 370px; overflow: auto; }
+.batch-staged-item, .batch-queue-item { padding: 12px; border: 1px solid rgba(151, 181, 223, .25); border-radius: 10px; background: rgba(5, 15, 34, .42); display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px 12px; }
+.batch-staged-item strong, .batch-queue-item strong { font-size: 12px; font-weight: 600; color: #e3edf9; overflow-wrap: anywhere; }
+.batch-staged-item small, .batch-queue-item small { font-size: 11px; line-height: 1.7; color: #afc1db; overflow-wrap: anywhere; }
+.batch-staged-item small, .batch-queue-item small, .batch-upload-error { grid-column: 1 / -1; }
+.batch-staged-item .text-button { grid-column: 2; grid-row: 1; font-size: 11px; }
+.batch-upload-error { color: #ffc3aa; font-size: 11px; line-height: 1.8; margin: 0; }
+.batch-queue { margin-top: 18px; padding: 15px; border: 1px solid rgba(161, 153, 234, .3); border-radius: 13px; background: rgba(15, 23, 47, .3); }
+.batch-queue-heading, .batch-queue-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; justify-content: space-between; }
+.batch-queue-heading h3 { color: #e1d6ff; font-size: 15px; margin: 0; }
+.batch-queue-heading span { color: #a9dcf1; font-size: 11px; }
+.batch-queue-actions { margin-top: 8px; justify-content: flex-start; }
+.batch-queue-actions button, .batch-item-actions button { font-size: 11px; }
+.batch-queue-note { font-size: 11px; color: #a8bad3; line-height: 1.8; margin: 8px 0 0; }
+.batch-state { color: #c4b6f7; background: rgba(103, 81, 177, .23); border: 1px solid rgba(166, 145, 232, .3); padding: 3px 7px; border-radius: 6px; font-size: 10px; white-space: nowrap; }
+.batch-queue-item.state-Success .batch-state { color: #9de2c9; border-color: rgba(125, 215, 179, .3); }
+.batch-queue-item.state-Partial .batch-state, .batch-queue-item.state-Failed .batch-state { color: #ffc3a5; border-color: rgba(244, 164, 120, .4); }
+.batch-queue-item.state-Cancelled { opacity: .65; }
+.batch-queue-item:has(.batch-state):not(.state-Queued):not(.state-Success):not(.state-Partial):not(.state-Failed):not(.state-Cancelled) { border-color: rgba(131, 220, 238, .6); }
+.batch-item-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 16px; }
+@media (max-width: 560px) { .batch-queue-item { grid-template-columns: minmax(0, 1fr); } .batch-state { justify-self: start; } }

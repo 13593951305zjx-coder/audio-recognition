@@ -1,0 +1,4 @@
+# Local speech-to-text mode. The model weights download on first use.
+faster-whisper==1.2.1
+librosa==0.11.0
+sherpa-onnx==1.13.8

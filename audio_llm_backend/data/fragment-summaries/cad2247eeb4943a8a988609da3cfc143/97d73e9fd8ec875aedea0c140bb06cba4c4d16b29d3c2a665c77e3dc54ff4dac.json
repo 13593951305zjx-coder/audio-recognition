@@ -1,0 +1,16 @@
+{
+  "segmentIndices": [
+    0,
+    1
+  ],
+  "segmentCount": 2,
+  "sourceText": "今天讨论课程项目,小王负责完成音频识别,小李负责整理会议记录。\n请在周五之前提交报告。",
+  "start": 0.0,
+  "end": 10.88,
+  "summary": "小王负责音频识别，小李负责整理会议记录，报告需在周五前提交。",
+  "keyPoints": [],
+  "taskId": "cad2247eeb4943a8a988609da3cfc143",
+  "sourceHash": "97d73e9fd8ec875aedea0c140bb06cba4c4d16b29d3c2a665c77e3dc54ff4dac",
+  "model": "qwen2.5:3b",
+  "createdAt": "2026-10-25T10:11:34.983863+00:00"
+}

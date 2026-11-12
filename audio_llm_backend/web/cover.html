@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>智能音频识别与重要信息提取系统 · 项目封面</title>
+  <link rel="icon" href="/static/favicon.svg" />
+  <link rel="stylesheet" href="/static/cover.css" />
+  <link rel="stylesheet" href="/static/page-transitions.css" />
+  <style>
+    :root {
+      --bg-primary: #060b19;
+      --bg-secondary: #0d162d;
+      --accent-cyan: #22d3ee;
+      --accent-purple: #a855f7;
+      --accent-emerald: #10b981;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --card-bg: rgba(15, 23, 42, 0.68);
+      --card-border: rgba(56, 189, 248, 0.24);
+    }
+
+    body.theme-violet {
+      --bg-primary: #0f0720;
+      --bg-secondary: #1e103a;
+      --accent-cyan: #f472b6;
+      --accent-purple: #818cf8;
+      --accent-emerald: #34d399;
+      --card-bg: rgba(28, 16, 54, 0.7);
+      --card-border: rgba(192, 132, 252, 0.28);
+    }
+
+    body.theme-light {
+      --bg-primary: #f1f5f9;
+      --bg-secondary: #e2e8f0;
+      --accent-cyan: #0284c7;
+      --accent-purple: #7c3aed;
+      --accent-emerald: #059669;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --card-bg: rgba(15, 23, 42, 0.92);
+      --card-border: rgba(14, 165, 233, 0.28);
+    }
+
+    body.theme-light .glass-card { color: #f8fafc; }
+    body.theme-light #displayAuthor,
+    body.theme-light #displayCourse { color: #1e293b; }
+    body.theme-light #displayBadge,
+    body.theme-light #displaySubtitle,
+    body.theme-light #displayEngine,
+    body.theme-light #architectureSection h2 { color: #0369a1; }
+    body.theme-light .cover-demo-note { color: #475569; }
+    body.theme-light .cover-example-heading { color: #0369a1; }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Inter', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background 0.35s ease, color 0.35s ease;
+    }
+
+    .glass-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.45),
+                  0 0 24px -4px rgba(34, 211, 238, 0.12);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .glass-card:hover {
+      border-color: rgba(34, 211, 238, 0.48);
+      box-shadow: 0 24px 56px -12px rgba(0, 0, 0, 0.55),
+                  0 0 30px -2px rgba(34, 211, 238, 0.22);
+    }
+
+    .title-gradient {
+      background: linear-gradient(92deg, #ffffff 0%, #67e8f9 48%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    body.theme-light .title-gradient {
+      background: linear-gradient(92deg, #0f172a 0%, #0284c7 52%, #7c3aed 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .grid-bg {
+      background-size: 36px 36px, 36px 36px, auto, auto, auto;
+      background-image:
+        linear-gradient(to right, rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+        radial-gradient(circle at 18% 22%, rgba(34, 211, 238, 0.14), transparent 42%),
+        radial-gradient(circle at 82% 72%, rgba(168, 85, 247, 0.16), transparent 46%),
+        linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    }
+
+    @keyframes pulse-bar {
+      0%, 100% { transform: scaleY(0.28); opacity: 0.65; }
+      50% { transform: scaleY(1); opacity: 1; }
+    }
+
+    .wave-bar {
+      transform-origin: center;
+      transition: transform 0.18s ease;
+    }
+
+    .wave-active .wave-bar {
+      animation: pulse-bar 1.1s ease-in-out infinite;
+    }
+
+    .glow-line {
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent-cyan), var(--accent-purple), transparent);
+      box-shadow: 0 0 16px var(--accent-cyan);
+    }
+
+    .cover-entry:focus-visible, .cover-return-link:focus-visible {
+      outline: 3px solid var(--accent-cyan);
+      outline-offset: 4px;
+    }
+
+    .intro-overlay[hidden] { display: none !important; }
+    .intro-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      display: grid;
+      place-items: center;
+      background: #060b19;
+      opacity: 0;
+      transition: opacity .26s ease;
+    }
+    .intro-overlay.is-visible { opacity: 1; }
+    .intro-overlay video { width: 100%; height: 100%; object-fit: contain; }
+    .intro-skip {
+      position: absolute;
+      z-index: 1;
+      top: 1.5rem;
+      right: 1.5rem;
+      padding: .55rem .9rem;
+      border: 1px solid rgba(103, 232, 249, .4);
+      border-radius: .7rem;
+      background: rgba(6, 11, 25, .8);
+      color: #c7f7ff;
+      font-size: .8rem;
+      cursor: pointer;
+    }
+    .intro-skip:hover { background: rgba(34, 211, 238, .18); }
+    .intro-replay { color: #94e9f3; font-size: .8rem; text-decoration: underline; text-underline-offset: 4px; }
+    .intro-replay:hover { color: #cffaff; }
+
+    .cover-summary-tabs {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .cover-summary-indicator {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: calc((100% - 12px) / 2);
+      height: calc(100% - 8px);
+      border-radius: 6px;
+      background: rgba(168, 85, 247, .3);
+      box-shadow: inset 0 0 0 1px rgba(192, 132, 252, .12);
+      transition: transform .34s cubic-bezier(.22, 1, .36, 1);
+    }
+    .cover-summary-tabs.is-todo .cover-summary-indicator {
+      transform: translateX(calc(100% + 4px));
+    }
+    .cover-summary-tabs button {
+      position: relative;
+      z-index: 1;
+      transition: color .22s ease;
+    }
+    .cover-tab-content { display: grid; }
+    .cover-tab-content > div {
+      grid-area: 1 / 1;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(7px);
+      pointer-events: none;
+      transition: opacity .24s ease, transform .3s ease, visibility .24s;
+    }
+    .cover-tab-content > div.is-active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cover-summary-indicator, .cover-summary-tabs button,
+      .cover-tab-content > div { transition-duration: .01ms; }
+    }
+
+    @media (max-width: 640px) {
+      .cover-topbar-inner { height: auto; min-height: 3.5rem; flex-wrap: wrap; padding-top: .5rem; padding-bottom: .5rem; }
+      .cover-toolbar-actions { flex-wrap: wrap; justify-content: flex-end; }
+    }
+  </style>
+  <link rel="stylesheet" href="/static/fixed-background.css?v=transparent-panels-v2" />
+</head>
+<body class="grid-bg selection:bg-cyan-500 selection:text-slate-950">
+
+  <!-- Top Control Bar -->
+  <header id="topToolbar" class="sticky top-0 z-40 border-b border-slate-800/60 bg-slate-950/70 backdrop-blur-md transition-all">
+    <div class="cover-topbar-inner max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse"></span>
+        <span class="text-xs sm:text-sm font-semibold tracking-wide text-cyan-300">AUDIO INSIGHT</span>
+        <span class="hidden sm:inline-block text-xs text-slate-400 border-l border-slate-700 pl-2.5">课程项目交互式封面</span>
+      </div>
+
+      <div class="cover-toolbar-actions flex items-center gap-2">
+        <a href="/app" class="cover-return-link px-3 py-1.5 rounded-lg text-xs font-semibold bg-cyan-400 text-slate-950 hover:bg-cyan-300 transition">进入系统 →</a>
+        <!-- View Mode Toggle -->
+        <div class="hidden md:flex items-center bg-slate-900/90 border border-slate-700/80 rounded-lg p-0.5 text-xs">
+          <button id="btnViewCover" type="button" class="px-2.5 py-1 rounded-md bg-cyan-500/20 text-cyan-300 font-medium transition">纯封面视图</button>
+          <button id="btnViewFull" type="button" class="px-2.5 py-1 rounded-md text-slate-400 hover:text-slate-200 transition">含架构详解</button>
+        </div>
+
+        <!-- Theme Selector -->
+        <div class="flex items-center bg-slate-900/90 border border-slate-700/80 rounded-lg p-0.5 text-xs">
+          <button id="btnThemeCyber" type="button" class="px-2.5 py-1 rounded-md bg-cyan-500/20 text-cyan-300 font-medium transition">深空蓝</button>
+          <button id="btnThemeViolet" type="button" class="px-2.5 py-1 rounded-md text-slate-400 hover:text-slate-200 transition">极光紫</button>
+          <button id="btnThemeLight" type="button" class="px-2.5 py-1 rounded-md text-slate-400 hover:text-slate-200 transition">学术浅色</button>
+        </div>
+
+        <!-- Edit Cover Info Button -->
+        <button id="btnToggleEditor" type="button" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-purple-500/20 hover:bg-purple-500/30 text-purple-200 border border-purple-400/30 transition flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+          <span>编辑署名/标题</span>
+        </button>
+
+        <!-- Clean Presentation Mode -->
+        <button id="btnCleanMode" type="button" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-200 border border-cyan-400/30 transition">
+          隐藏顶栏汇报
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Floating Restore Toolbar Button (when in clean presentation mode) -->
+  <button id="btnRestoreToolbar" type="button" class="hidden fixed top-4 right-4 z-50 px-3 py-1.5 rounded-full text-xs font-medium bg-slate-900/80 hover:bg-slate-800 text-cyan-300 border border-cyan-500/40 backdrop-blur-md shadow-lg transition">
+    显示控制栏
+  </button>
+
+  <!-- Collapsible Cover Text Editor Drawer -->
+  <section id="editorDrawer" class="hidden border-b border-cyan-500/30 bg-slate-900/95 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-sm font-semibold text-cyan-300">自定义封面文字与汇报信息（实时生效）</h2>
+        <button id="btnCloseEditor" type="button" class="text-xs text-slate-400 hover:text-white">收起面板 ✕</button>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+        <div>
+          <label for="inputBadge" class="block text-slate-400 mb-1">顶部技术标签</label>
+          <input id="inputBadge" type="text" value="本地 AI × FASTER-WHISPER · 课程设计项目" class="w-full px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-slate-100 focus:outline-none focus:border-cyan-400" />
+        </div>
+        <div>
+          <label for="inputTitleLine1" class="block text-slate-400 mb-1">主标题（第一行）</label>
+          <input id="inputTitleLine1" type="text" value="智能音频识别与" class="w-full px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-slate-100 focus:outline-none focus:border-cyan-400" />
+        </div>
+        <div>
+          <label for="inputTitleLine2" class="block text-slate-400 mb-1">主标题（第二行）</label>
+          <input id="inputTitleLine2" type="text" value="重要信息提取系统" class="w-full px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-slate-100 focus:outline-none focus:border-cyan-400" />
+        </div>
+        <div>
+          <label for="inputSubtitle" class="block text-slate-400 mb-1">副标题说明</label>
+          <input id="inputSubtitle" type="text" value="AUDIO INSIGHT · 语音转写 · 智能摘要 · 音高分析" class="w-full px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-slate-100 focus:outline-none focus:border-cyan-400" />
+        </div>
+        <div>
+          <label for="inputAuthor" class="block text-slate-400 mb-1">汇报人 / 团队</label>
+          <input id="inputAuthor" type="text" value="Diamond · 音频智能分析组" class="w-full px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-slate-100 focus:outline-none focus:border-cyan-400" />
+        </div>
+        <div>
+          <label for="inputCourse" class="block text-slate-400 mb-1">课程 / 平台环境</label>
+          <input id="inputCourse" type="text" value="Android + Web 双端音频识别系统" class="w-full px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-slate-100 focus:outline-none focus:border-cyan-400" />
+        </div>
+        <div>
+          <label for="inputEngine" class="block text-slate-400 mb-1">AI 引擎模式展示</label>
+          <select id="inputEngine" class="w-full px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-slate-100 focus:outline-none focus:border-cyan-400">
+            <option value="Whisper Small + Qwen2.5:3b 本地部署">Whisper Small + Qwen2.5:3b 本地部署</option>
+            <option value="Whisper Small + Ollama 本地大模型">Whisper Small + Ollama 本地大模型</option>
+          </select>
+        </div>
+        <div class="flex items-end">
+          <button id="btnResetText" type="button" class="w-full px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 transition">恢复默认文案</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main 16:9 Cover Hero Stage -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-8 py-8 lg:py-12 min-h-[calc(100vh-3.5rem)] flex flex-col justify-center">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+
+      <!-- Left Column: Project Cover Typography & Core Badges -->
+      <div class="lg:col-span-6 space-y-6 text-left">
+        <!-- Top Pill Badge -->
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-xs font-semibold tracking-wider">
+          <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+          <span id="displayBadge">本地 AI × FASTER-WHISPER · 课程设计项目</span>
+        </div>
+
+        <!-- Main Title -->
+        <div class="space-y-2">
+          <h1 class="text-4xl sm:text-5xl xl:text-6xl font-black tracking-tight leading-[1.15]">
+            <span id="displayTitle1" class="block title-gradient">智能音频识别与</span>
+            <span id="displayTitle2" class="block title-gradient mt-1">重要信息提取系统</span>
+          </h1>
+        </div>
+
+        <!-- Glowing Divider Line -->
+        <div class="glow-line w-3/4 rounded-full"></div>
+
+        <!-- Subtitle -->
+        <p id="displaySubtitle" class="text-sm sm:text-base lg:text-lg font-semibold tracking-widest text-cyan-300/90 uppercase">
+          AUDIO INSIGHT · 语音转写 · 智能摘要 · 音高分析
+        </p>
+
+        <div class="flex flex-wrap items-center gap-3">
+          <a href="/app" class="cover-entry inline-flex items-center justify-center px-6 py-3 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold shadow-lg shadow-cyan-500/20 transition">进入音频识别系统 <span aria-hidden="true" class="ml-2">→</span></a>
+          <button id="replayIntro" type="button" class="intro-replay">▶ 重播片头</button>
+          <span class="cover-demo-note text-xs text-slate-400">下方为功能示例；真实录音与识别请进入系统</span>
+        </div>
+
+        <!-- Core Feature Pills -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-1">
+          <div class="glass-card rounded-xl p-3 flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/30 flex items-center justify-center text-cyan-300 shrink-0">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+            </div>
+            <div>
+              <div class="text-xs font-bold">边录边转写</div>
+              <div class="text-[11px] text-slate-400">字词时间戳对齐</div>
+            </div>
+          </div>
+
+          <div class="glass-card rounded-xl p-3 flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg bg-purple-500/20 border border-purple-400/30 flex items-center justify-center text-purple-300 shrink-0">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </div>
+            <div>
+              <div class="text-xs font-bold">本地大模型提取重点</div>
+              <div class="text-[11px] text-slate-400">摘要/待办/关键词</div>
+            </div>
+          </div>
+
+          <div class="glass-card rounded-xl p-3 flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-300 shrink-0">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            </div>
+            <div>
+              <div class="text-xs font-bold">说话人区分</div>
+              <div class="text-[11px] text-slate-400">声纹聚类与占比</div>
+            </div>
+          </div>
+
+          <div class="glass-card rounded-xl p-3 flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-400/30 flex items-center justify-center text-amber-300 shrink-0">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            </div>
+            <div>
+              <div class="text-xs font-bold">模糊片段核对</div>
+              <div class="text-[11px] text-slate-400">低置信度原声复听</div>
+            </div>
+          </div>
+
+          <div class="glass-card rounded-xl p-3 flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg bg-pink-500/20 border border-pink-400/30 flex items-center justify-center text-pink-300 shrink-0">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/></svg>
+            </div>
+            <div>
+              <div class="text-xs font-bold">pYIN 音高统计</div>
+              <div class="text-[11px] text-slate-400">65–600Hz 基频曲线</div>
+            </div>
+          </div>
+
+          <div class="glass-card rounded-xl p-3 flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg bg-sky-500/20 border border-sky-400/30 flex items-center justify-center text-sky-300 shrink-0">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </div>
+            <div>
+              <div class="text-xs font-bold">跨记录检索</div>
+              <div class="text-[11px] text-slate-400">繁简合一秒级定位</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metadata Footer Bar on Cover -->
+        <div class="pt-3 flex flex-wrap items-center gap-4 text-xs text-slate-400 border-t border-slate-800/80">
+          <div class="flex items-center gap-1.5">
+            <span class="text-slate-500">汇报团队：</span>
+            <span id="displayAuthor" class="font-semibold text-slate-200">Diamond · 音频智能分析组</span>
+          </div>
+          <span class="text-slate-700">|</span>
+          <div class="flex items-center gap-1.5">
+            <span class="text-slate-500">架构形态：</span>
+            <span id="displayCourse" class="font-semibold text-slate-200">Android + Web 双端音频识别系统</span>
+          </div>
+          <span class="text-slate-700">|</span>
+          <div class="flex items-center gap-1.5">
+            <span class="text-slate-500">模型引擎：</span>
+            <span id="displayEngine" class="font-semibold text-cyan-300">Whisper Small + Qwen2.5:3b 本地部署</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Interactive Visual Cards (Recreating the Cover Artwork in Live HTML/SVG) -->
+      <div class="lg:col-span-6 space-y-4">
+        <p class="cover-example-heading text-xs text-cyan-300/80 font-semibold tracking-wide">功能示例 · 仅用于封面展示</p>
+
+        <!-- Card 1: Acoustic Waveform & Live Capture Simulator -->
+        <div class="glass-card rounded-2xl p-4 sm:p-5 relative overflow-hidden">
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 to-purple-600 flex items-center justify-center text-slate-950 shadow-lg shadow-cyan-500/20">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+              </div>
+              <div>
+                <div class="text-xs font-bold flex items-center gap-2">
+                  <span>实时声波采样与分句定位</span>
+                   <span id="liveStatusBadge" class="px-2 py-0.5 text-[10px] rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">声波演示</span>
+                </div>
+                <div class="text-[11px] text-slate-400">点击右侧按钮可切换声波演示，真实音频请进入系统播放</div>
+              </div>
+            </div>
+
+            <button id="btnToggleWave" type="button" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-md shadow-cyan-500/20 transition flex items-center gap-1.5">
+              <span id="waveBtnIcon">⏸</span>
+              <span id="waveBtnText">暂停声波演示</span>
+            </button>
+          </div>
+
+          <!-- Animated 28-bar Neon Waveform -->
+          <div id="waveformContainer" class="wave-active h-14 flex items-center justify-between gap-1 px-2 py-1 rounded-xl bg-slate-950/60 border border-slate-800/80">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Card 2: Multi-Speaker Timestamped Transcript & AI Summary Split -->
+        <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
+
+          <!-- Transcript & Speaker Diarization -->
+          <div class="sm:col-span-7 glass-card rounded-2xl p-4 space-y-2.5">
+            <div class="flex items-center justify-between text-xs pb-1 border-b border-slate-800/80">
+              <span class="font-bold text-cyan-300">多说话人分段转写 (OpenCC 简体)</span>
+              <span class="text-[11px] text-slate-400">点击句子体验演示交互</span>
+            </div>
+
+            <div id="segRow0" class="p-2.5 rounded-xl bg-slate-900/75 border border-cyan-500/40 cursor-pointer transition hover:border-cyan-400">
+              <div class="flex items-center justify-between text-[11px] mb-1">
+                <div class="flex items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded-md bg-cyan-500/20 text-cyan-300 font-semibold">[00:12.40–00:18.60]</span>
+                  <span class="px-2 py-0.5 rounded-md bg-blue-500/20 text-blue-300 font-medium">男生A · 62%</span>
+                </div>
+                <span class="text-cyan-400 text-xs">♪ 演示提示音</span>
+              </div>
+              <p class="text-xs leading-relaxed text-slate-200">
+                今天讨论课程项目：用本地 Whisper 完成语音转写，再由 <span class="text-cyan-300 font-semibold">Ollama 中的 Qwen2.5</span> 提取摘要与待办。
+              </p>
+            </div>
+
+            <div id="segRow1" class="p-2.5 rounded-xl bg-slate-900/50 border border-slate-800 cursor-pointer transition hover:border-purple-400">
+              <div class="flex items-center justify-between text-[11px] mb-1">
+                <div class="flex items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded-md bg-purple-500/20 text-purple-300 font-semibold">[00:19.10–00:25.80]</span>
+                  <span class="px-2 py-0.5 rounded-md bg-pink-500/20 text-pink-300 font-medium">女生A · 38%</span>
+                  <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-400/30 text-[10px]">待核对</span>
+                </div>
+                <span class="text-purple-300 text-xs">♪ 演示提示音</span>
+              </div>
+              <p class="text-xs leading-relaxed text-slate-200">
+                小王负责检查 <span class="underline decoration-amber-400 decoration-wavy text-amber-300" title="演示：低把握词语建议复听">sherpa-onnx</span> 说话人分组，小李周五前核对 CSV 统计导出。
+              </p>
+            </div>
+          </div>
+
+          <!-- Local AI Key Information Extraction Card -->
+          <div class="sm:col-span-5 glass-card rounded-2xl p-4 flex flex-col justify-between space-y-3">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="px-2.5 py-1 rounded-lg bg-gradient-to-r from-purple-500/30 to-cyan-500/30 border border-purple-400/40 text-purple-200 text-xs font-bold">
+                  ✨ 本地 Qwen 重点提取
+                </span>
+                <span class="text-[11px] text-emerald-300 font-medium">JSON 结构化</span>
+              </div>
+
+              <!-- Interactive Mini Tabs -->
+              <div id="summaryTabs" class="cover-summary-tabs gap-1 bg-slate-950/70 p-1 rounded-lg text-[11px] mb-2.5" role="tablist" aria-label="示例重点信息">
+                <span class="cover-summary-indicator" aria-hidden="true"></span>
+                <button id="tabBtnSummary" type="button" role="tab" aria-selected="true" aria-controls="tabContentSummary" class="py-1 rounded text-purple-200 font-semibold">核心摘要</button>
+                <button id="tabBtnTodo" type="button" role="tab" aria-selected="false" aria-controls="tabContentTodo" class="py-1 rounded text-slate-400 hover:text-slate-200">待办与决定</button>
+              </div>
+
+              <div class="cover-tab-content">
+              <div id="tabContentSummary" role="tabpanel" aria-labelledby="tabBtnSummary" class="is-active space-y-2 text-xs text-slate-300 leading-relaxed">
+                <p>课程项目采用本地 Whisper 转写音频，使用 Ollama 中的 Qwen2.5 整理摘要和待办。</p>
+                <div class="flex flex-wrap gap-1.5 pt-1">
+                  <span class="px-2 py-0.5 rounded-full bg-cyan-500/15 border border-cyan-400/30 text-cyan-300 text-[11px]">#本地模型</span>
+                  <span class="px-2 py-0.5 rounded-full bg-purple-500/15 border border-purple-400/30 text-purple-300 text-[11px]">#说话人聚类</span>
+                  <span class="px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-[11px]">#周五截止</span>
+                </div>
+              </div>
+
+              <div id="tabContentTodo" role="tabpanel" aria-labelledby="tabBtnTodo" aria-hidden="true" inert class="space-y-2 text-xs text-slate-300">
+                <label class="flex items-start gap-2 cursor-pointer">
+                  <input id="todoCheck1" type="checkbox" checked class="mt-0.5 accent-emerald-400 rounded" />
+                  <span>小王检查说话人分组</span>
+                </label>
+                <label class="flex items-start gap-2 cursor-pointer">
+                  <input id="todoCheck2" type="checkbox" class="mt-0.5 accent-emerald-400 rounded" />
+                  <span>小李周五前核对 CSV 导出</span>
+                </label>
+              </div>
+              </div>
+            </div>
+
+            <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+              <span>置信度核对：1 处低分词</span>
+              <span class="text-emerald-400 font-medium">✓ 已转简体</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Fundamental Frequency (F0) Pitch Curve & Histogram -->
+        <div class="glass-card rounded-2xl p-4 sm:p-5">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+            <div>
+              <div class="text-xs font-bold flex items-center gap-2">
+                <span>人声基频 (F0) 音高曲线与分布直方图</span>
+                <span class="text-[11px] font-normal text-slate-400">librosa.pyin · 65–600 Hz</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 text-xs">
+              <span class="px-2 py-0.5 rounded bg-cyan-500/15 text-cyan-300 font-medium">均值: <strong id="pitchAvgVal">214.6 Hz</strong></span>
+              <span class="px-2 py-0.5 rounded bg-purple-500/15 text-purple-300 font-medium">中位数: <strong id="pitchMedVal">208.0 Hz</strong></span>
+              <button id="btnSwitchPitchSample" type="button" class="px-2.5 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 transition text-[11px]">
+                切换语段样本
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
+            <!-- Smooth SVG F0 Pitch Curve -->
+            <div class="sm:col-span-8 bg-slate-950/60 border border-slate-800/80 rounded-xl p-3">
+              <svg id="pitchSvg" viewBox="0 0 420 110" class="w-full h-24 overflow-visible">
+                <defs>
+                  <linearGradient id="pitchFillGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.42"/>
+                    <stop offset="100%" stop-color="#a855f7" stop-opacity="0.0"/>
+                  </linearGradient>
+                  <linearGradient id="pitchStrokeGrad" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="#22d3ee"/>
+                    <stop offset="50%" stop-color="#a855f7"/>
+                    <stop offset="100%" stop-color="#10b981"/>
+                  </linearGradient>
+                </defs>
+                <!-- Horizontal reference lines -->
+                <line x1="28" y1="15" x2="410" y2="15" stroke="rgba(148,163,184,0.14)" stroke-dasharray="3 3"/>
+                <line x1="28" y1="52" x2="410" y2="52" stroke="rgba(148,163,184,0.14)" stroke-dasharray="3 3"/>
+                <line x1="28" y1="90" x2="410" y2="90" stroke="rgba(148,163,184,0.2)"/>
+                <text x="2" y="19" fill="#64748b" font-size="9">400Hz</text>
+                <text x="2" y="55" fill="#64748b" font-size="9">220Hz</text>
+                <text x="2" y="93" fill="#64748b" font-size="9">65Hz</text>
+
+                <!-- Dynamic Area & Path -->
+                <path id="pitchAreaPath" d="M30,68 C75,32 110,74 155,44 C200,14 240,65 285,36 C330,18 365,62 405,40 L405,90 L30,90 Z" fill="url(#pitchFillGrad)" />
+                <path id="pitchLinePath" d="M30,68 C75,32 110,74 155,44 C200,14 240,65 285,36 C330,18 365,62 405,40" fill="none" stroke="url(#pitchStrokeGrad)" stroke-width="3" stroke-linecap="round" />
+                <circle id="pitchPeakDot" cx="285" cy="36" r="4.5" fill="#22d3ee" stroke="#0f172a" stroke-width="2"/>
+              </svg>
+            </div>
+
+            <!-- Frequency Histogram Bars -->
+            <div class="sm:col-span-4 bg-slate-950/60 border border-slate-800/80 rounded-xl p-3">
+              <div class="text-[10px] text-slate-400 mb-2 flex justify-between">
+                <span>频段分布 (Hz)</span>
+                <span id="voicedRatioLabel" class="text-emerald-400">有声占比 78.4%</span>
+              </div>
+              <div id="histogramBars" class="h-20 flex items-end justify-between gap-1.5 pt-2">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Optional Architecture Details Section (Shown when "含架构详解" is clicked) -->
+    <section id="architectureSection" class="hidden mt-12 pt-10 border-t border-slate-800/80 space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div>
+          <h2 class="text-xl font-bold text-cyan-300">系统架构与核心处理流水线</h2>
+          <p class="text-xs text-slate-400">从音频采集、Faster-Whisper 转写、sherpa-onnx 说话人分组到本地 Qwen 重要信息提取</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs">
+        <div class="glass-card rounded-2xl p-4 space-y-2">
+          <div class="text-cyan-400 font-bold">01 · 实时采音与解码</div>
+          <p class="text-slate-300 leading-relaxed">浏览器 AudioWorklet 16kHz 单声道重采样，支持边录边转写预览；PyAV 解码多种音视频轨道并提取原声切片。</p>
+        </div>
+        <div class="glass-card rounded-2xl p-4 space-y-2">
+          <div class="text-purple-400 font-bold">02 · 语音转写与模糊核对</div>
+          <p class="text-slate-300 leading-relaxed">Faster-Whisper 输出逐词时间戳与对数概率，结合 RMS 响度自动标记低把握词语供点击原声复听。</p>
+        </div>
+        <div class="glass-card rounded-2xl p-4 space-y-2">
+          <div class="text-emerald-400 font-bold">03 · 说话人声纹与发言统计</div>
+          <p class="text-slate-300 leading-relaxed">基于 Pyannote 分段与 3D-Speaker 向量模型自动区分说话人，支持自定义称呼、饼图占比与 CSV 导出。</p>
+        </div>
+        <div class="glass-card rounded-2xl p-4 space-y-2">
+          <div class="text-amber-400 font-bold">04 · 本地 Qwen 重点提取与音高</div>
+          <p class="text-slate-300 leading-relaxed">通过 Ollama 的 Qwen2.5 提炼摘要、关键词、事实、决定与待办事项；同步通过 librosa pYIN 计算 65–600Hz 人声基频分布。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Toast Notification -->
+  <div id="toastBox" class="fixed bottom-5 right-5 z-50 hidden px-4 py-2.5 rounded-xl bg-slate-900/95 border border-cyan-400/40 text-xs text-cyan-200 shadow-xl backdrop-blur-md">
+    <span id="toastMessage">已定位到该句原声时间轴</span>
+  </div>
+
+  <script>
+    (function () {
+      // 1. Render 28 Waveform Bars
+      const waveformContainer = document.getElementById('waveformContainer');
+      const heights = [28, 45, 72, 60, 90, 48, 82, 96, 64, 40, 78, 88, 52, 95, 70, 44, 84, 62, 36, 74, 92, 58, 80, 46, 68, 86, 50, 34];
+      const colors = ['bg-cyan-400', 'bg-sky-400', 'bg-indigo-400', 'bg-purple-400', 'bg-emerald-400'];
+
+      function renderWaveBars() {
+        waveformContainer.innerHTML = '';
+        heights.forEach((h, idx) => {
+          const bar = document.createElement('div');
+          const colorClass = colors[idx % colors.length];
+          bar.className = `wave-bar flex-1 rounded-full ${colorClass}`;
+          bar.style.height = `${h}%`;
+          bar.style.animationDelay = `${(idx * 0.06).toFixed(2)}s`;
+          waveformContainer.appendChild(bar);
+        });
+      }
+      renderWaveBars();
+
+      // 2. Web Audio API Synthesizer for Interactive Feedback
+      let audioCtx = null;
+      function playTone(freq, durationMs) {
+        try {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          if (!AudioContextClass) return;
+          if (!audioCtx) audioCtx = new AudioContextClass();
+          if (audioCtx.state === 'suspended') audioCtx.resume();
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+          gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + durationMs / 1000);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + durationMs / 1000);
+        } catch (err) {
+          // Ignore audio errors on restricted environments
+        }
+      }
+
+      // Toast helper
+      let toastTimer = null;
+      const toastBox = document.getElementById('toastBox');
+      const toastMessage = document.getElementById('toastMessage');
+      function showToast(msg) {
+        toastMessage.textContent = msg;
+        toastBox.classList.remove('hidden');
+        if (toastTimer) clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toastBox.classList.add('hidden');
+        }, 2600);
+      }
+
+      // 3. Toggle Waveform Simulation
+      let waveRunning = true;
+      const btnToggleWave = document.getElementById('btnToggleWave');
+      const waveBtnIcon = document.getElementById('waveBtnIcon');
+      const waveBtnText = document.getElementById('waveBtnText');
+      const liveStatusBadge = document.getElementById('liveStatusBadge');
+
+      btnToggleWave.addEventListener('click', () => {
+        waveRunning = !waveRunning;
+        if (waveRunning) {
+          waveformContainer.classList.add('wave-active');
+          waveBtnIcon.textContent = '⏸';
+          waveBtnText.textContent = '暂停声波演示';
+           liveStatusBadge.textContent = '声波演示中';
+          playTone(520, 180);
+           showToast('已开启声波动画演示');
+        } else {
+          waveformContainer.classList.remove('wave-active');
+          waveBtnIcon.textContent = '▶';
+          waveBtnText.textContent = '模拟原声声波';
+           liveStatusBadge.textContent = '声波演示已暂停';
+          playTone(340, 140);
+           showToast('已暂停声波动画演示');
+        }
+      });
+
+      // 4. Transcript Segment Click Interaction
+      const segRow0 = document.getElementById('segRow0');
+      const segRow1 = document.getElementById('segRow1');
+
+      segRow0.addEventListener('click', () => {
+        segRow0.className = 'p-2.5 rounded-xl bg-slate-900/80 border border-cyan-400 cursor-pointer transition';
+        segRow1.className = 'p-2.5 rounded-xl bg-slate-900/50 border border-slate-800 cursor-pointer transition hover:border-purple-400';
+        playTone(440, 200);
+         showToast('封面示例 [00:12.40–00:18.60] · 进入系统可播放真实原声');
+      });
+
+      segRow1.addEventListener('click', () => {
+        segRow1.className = 'p-2.5 rounded-xl bg-slate-900/80 border border-purple-400 cursor-pointer transition';
+        segRow0.className = 'p-2.5 rounded-xl bg-slate-900/50 border border-slate-800 cursor-pointer transition hover:border-cyan-400';
+        playTone(587, 200);
+         showToast('封面示例 [00:19.10–00:25.80] · 进入系统可复听真实片段');
+      });
+
+       // 5. Local model key info mini tabs
+      const tabBtnSummary = document.getElementById('tabBtnSummary');
+      const tabBtnTodo = document.getElementById('tabBtnTodo');
+      const tabContentSummary = document.getElementById('tabContentSummary');
+      const tabContentTodo = document.getElementById('tabContentTodo');
+      const summaryTabs = document.getElementById('summaryTabs');
+
+      function selectSummaryTab(showTodo) {
+        summaryTabs.classList.toggle('is-todo', showTodo);
+        tabBtnSummary.setAttribute('aria-selected', String(!showTodo));
+        tabBtnTodo.setAttribute('aria-selected', String(showTodo));
+        tabBtnSummary.classList.toggle('text-purple-200', !showTodo);
+        tabBtnSummary.classList.toggle('text-slate-400', showTodo);
+        tabBtnTodo.classList.toggle('text-purple-200', showTodo);
+        tabBtnTodo.classList.toggle('text-slate-400', !showTodo);
+        tabContentSummary.classList.toggle('is-active', !showTodo);
+        tabContentTodo.classList.toggle('is-active', showTodo);
+        tabContentSummary.toggleAttribute('inert', showTodo);
+        tabContentTodo.toggleAttribute('inert', !showTodo);
+        tabContentSummary.setAttribute('aria-hidden', String(showTodo));
+        tabContentTodo.setAttribute('aria-hidden', String(!showTodo));
+      }
+      tabBtnSummary.addEventListener('click', () => selectSummaryTab(false));
+      tabBtnTodo.addEventListener('click', () => selectSummaryTab(true));
+
+      // 6. Pitch Curve & Histogram Samples
+      const pitchSamples = [
+        {
+          avg: '214.6 Hz',
+          med: '208.0 Hz',
+          voiced: '有声占比 78.4%',
+          line: 'M30,68 C75,32 110,74 155,44 C200,14 240,65 285,36 C330,18 365,62 405,40',
+          area: 'M30,68 C75,32 110,74 155,44 C200,14 240,65 285,36 C330,18 365,62 405,40 L405,90 L30,90 Z',
+          dot: { cx: 285, cy: 36 },
+          bins: [
+            { label: '100', h: 35, c: 'bg-cyan-500/70' },
+            { label: '150', h: 68, c: 'bg-cyan-400' },
+            { label: '200', h: 95, c: 'bg-purple-400' },
+            { label: '250', h: 74, c: 'bg-purple-500/80' },
+            { label: '300', h: 42, c: 'bg-emerald-400/80' },
+            { label: '350+', h: 22, c: 'bg-emerald-500/60' }
+          ]
+        },
+        {
+          avg: '142.8 Hz',
+          med: '138.5 Hz',
+          voiced: '有声占比 83.2%',
+          line: 'M30,76 C80,62 125,80 170,58 C215,48 255,72 300,54 C345,66 375,52 405,64',
+          area: 'M30,76 C80,62 125,80 170,58 C215,48 255,72 300,54 C345,66 375,52 405,64 L405,90 L30,90 Z',
+          dot: { cx: 170, cy: 58 },
+          bins: [
+            { label: '100', h: 82, c: 'bg-cyan-400' },
+            { label: '150', h: 96, c: 'bg-cyan-500' },
+            { label: '200', h: 54, c: 'bg-purple-400/80' },
+            { label: '250', h: 28, c: 'bg-purple-500/60' },
+            { label: '300', h: 16, c: 'bg-emerald-400/60' },
+            { label: '350+', h: 10, c: 'bg-emerald-500/40' }
+          ]
+        },
+        {
+          avg: '268.4 Hz',
+          med: '261.0 Hz',
+          voiced: '有声占比 74.9%',
+          line: 'M30,52 C70,22 115,48 160,24 C205,38 250,18 295,28 C340,14 375,38 405,22',
+          area: 'M30,52 C70,22 115,48 160,24 C205,38 250,18 295,28 C340,14 375,38 405,22 L405,90 L30,90 Z',
+          dot: { cx: 250, cy: 18 },
+          bins: [
+            { label: '100', h: 14, c: 'bg-cyan-500/50' },
+            { label: '150', h: 32, c: 'bg-cyan-400/70' },
+            { label: '200', h: 64, c: 'bg-purple-400' },
+            { label: '250', h: 96, c: 'bg-purple-500' },
+            { label: '300', h: 78, c: 'bg-emerald-400' },
+            { label: '350+', h: 46, c: 'bg-emerald-500/80' }
+          ]
+        }
+      ];
+
+      let currentPitchIdx = 0;
+      const histogramBars = document.getElementById('histogramBars');
+      const pitchAvgVal = document.getElementById('pitchAvgVal');
+      const pitchMedVal = document.getElementById('pitchMedVal');
+      const voicedRatioLabel = document.getElementById('voicedRatioLabel');
+      const pitchLinePath = document.getElementById('pitchLinePath');
+      const pitchAreaPath = document.getElementById('pitchAreaPath');
+      const pitchPeakDot = document.getElementById('pitchPeakDot');
+
+      function renderPitchSample(idx) {
+        const sample = pitchSamples[idx];
+        pitchAvgVal.textContent = sample.avg;
+        pitchMedVal.textContent = sample.med;
+        voicedRatioLabel.textContent = sample.voiced;
+        pitchLinePath.setAttribute('d', sample.line);
+        pitchAreaPath.setAttribute('d', sample.area);
+        pitchPeakDot.setAttribute('cx', sample.dot.cx);
+        pitchPeakDot.setAttribute('cy', sample.dot.cy);
+
+        histogramBars.innerHTML = '';
+        sample.bins.forEach((b) => {
+          const col = document.createElement('div');
+          col.className = 'flex-1 flex flex-col items-center justify-end h-full gap-1';
+          col.innerHTML = `
+            <div class="w-full rounded-t ${b.c} transition-all duration-300" style="height: ${b.h}%"></div>
+            <span class="text-[9px] text-slate-400">${b.label}</span>
+          `;
+          histogramBars.appendChild(col);
+        });
+      }
+      renderPitchSample(0);
+
+      document.getElementById('btnSwitchPitchSample').addEventListener('click', () => {
+        currentPitchIdx = (currentPitchIdx + 1) % pitchSamples.length;
+        renderPitchSample(currentPitchIdx);
+        playTone(380 + currentPitchIdx * 90, 150);
+        showToast(`已切换音高统计样本 #${currentPitchIdx + 1}`);
+      });
+
+      // 7. Theme Switcher
+      const btnThemeCyber = document.getElementById('btnThemeCyber');
+      const btnThemeViolet = document.getElementById('btnThemeViolet');
+      const btnThemeLight = document.getElementById('btnThemeLight');
+
+      function setThemeButtonActive(activeBtn) {
+        [btnThemeCyber, btnThemeViolet, btnThemeLight].forEach((btn) => {
+          if (btn === activeBtn) {
+            btn.className = 'px-2.5 py-1 rounded-md bg-cyan-500/20 text-cyan-300 font-medium transition';
+          } else {
+            btn.className = 'px-2.5 py-1 rounded-md text-slate-400 hover:text-slate-200 transition';
+          }
+        });
+      }
+
+      function saveTheme(name) {
+        try { localStorage.setItem('audio-insight-theme', name); } catch (_) { /* storage may be disabled */ }
+      }
+
+      btnThemeCyber.addEventListener('click', () => {
+        document.body.classList.remove('theme-violet', 'theme-light');
+        setThemeButtonActive(btnThemeCyber);
+        saveTheme('cyber');
+      });
+
+      btnThemeViolet.addEventListener('click', () => {
+        document.body.classList.remove('theme-light');
+        document.body.classList.add('theme-violet');
+        setThemeButtonActive(btnThemeViolet);
+        saveTheme('violet');
+      });
+
+      btnThemeLight.addEventListener('click', () => {
+        document.body.classList.remove('theme-violet');
+        document.body.classList.add('theme-light');
+        setThemeButtonActive(btnThemeLight);
+        saveTheme('light');
+      });
+      try {
+        const savedTheme = localStorage.getItem('audio-insight-theme');
+        if (savedTheme === 'violet') btnThemeViolet.click();
+        if (savedTheme === 'light') btnThemeLight.click();
+      } catch (_) { /* use the default theme */ }
+
+      // 8. View Mode Toggle (Cover Only vs Full with Architecture)
+      const btnViewCover = document.getElementById('btnViewCover');
+      const btnViewFull = document.getElementById('btnViewFull');
+      const architectureSection = document.getElementById('architectureSection');
+
+      btnViewCover.addEventListener('click', () => {
+        architectureSection.classList.add('hidden');
+        btnViewCover.className = 'px-2.5 py-1 rounded-md bg-cyan-500/20 text-cyan-300 font-medium transition';
+        btnViewFull.className = 'px-2.5 py-1 rounded-md text-slate-400 hover:text-slate-200 transition';
+      });
+
+      btnViewFull.addEventListener('click', () => {
+        architectureSection.classList.remove('hidden');
+        btnViewFull.className = 'px-2.5 py-1 rounded-md bg-cyan-500/20 text-cyan-300 font-medium transition';
+        btnViewCover.className = 'px-2.5 py-1 rounded-md text-slate-400 hover:text-slate-200 transition';
+        architectureSection.scrollIntoView({ behavior: 'smooth' });
+      });
+
+      // 9. Editor Drawer & Live Text Binding
+      const editorDrawer = document.getElementById('editorDrawer');
+      const btnToggleEditor = document.getElementById('btnToggleEditor');
+      const btnCloseEditor = document.getElementById('btnCloseEditor');
+
+      btnToggleEditor.addEventListener('click', () => {
+        editorDrawer.classList.toggle('hidden');
+      });
+      btnCloseEditor.addEventListener('click', () => {
+        editorDrawer.classList.add('hidden');
+      });
+
+      const bindings = [
+         { input: 'inputBadge', display: 'displayBadge', def: '本地 AI × FASTER-WHISPER · 课程设计项目' },
+        { input: 'inputTitleLine1', display: 'displayTitle1', def: '智能音频识别与' },
+        { input: 'inputTitleLine2', display: 'displayTitle2', def: '重要信息提取系统' },
+        { input: 'inputSubtitle', display: 'displaySubtitle', def: 'AUDIO INSIGHT · 语音转写 · 智能摘要 · 音高分析' },
+        { input: 'inputAuthor', display: 'displayAuthor', def: 'Diamond · 音频智能分析组' },
+        { input: 'inputCourse', display: 'displayCourse', def: 'Android + Web 双端音频识别系统' },
+         { input: 'inputEngine', display: 'displayEngine', def: 'Whisper Small + Qwen2.5:3b 本地部署' }
+      ];
+
+      bindings.forEach(({ input, display }) => {
+        const inputEl = document.getElementById(input);
+        const displayEl = document.getElementById(display);
+        const update = () => {
+          displayEl.textContent = inputEl.value || '';
+        };
+        inputEl.addEventListener('input', update);
+        inputEl.addEventListener('change', update);
+      });
+
+      document.getElementById('btnResetText').addEventListener('click', () => {
+        bindings.forEach(({ input, display, def }) => {
+          const inputEl = document.getElementById(input);
+          const displayEl = document.getElementById(display);
+          inputEl.value = def;
+          displayEl.textContent = def;
+        });
+        showToast('已恢复默认封面标题与署名');
+      });
+
+      // 10. Clean Presentation Mode (Hide Top Bar for Clean Screenshot / Projection)
+      const topToolbar = document.getElementById('topToolbar');
+      const btnCleanMode = document.getElementById('btnCleanMode');
+      const btnRestoreToolbar = document.getElementById('btnRestoreToolbar');
+
+      btnCleanMode.addEventListener('click', () => {
+        topToolbar.classList.add('hidden');
+        editorDrawer.classList.add('hidden');
+        btnRestoreToolbar.classList.remove('hidden');
+        showToast('已进入纯净汇报视图，右上角可恢复控制栏');
+      });
+
+      btnRestoreToolbar.addEventListener('click', () => {
+        topToolbar.classList.remove('hidden');
+        btnRestoreToolbar.classList.add('hidden');
+      });
+    })();
+  </script>
+  <div id="introOverlay" class="intro-overlay" role="dialog" aria-label="项目启动视频" aria-modal="true" hidden>
+    <video id="introVideo" src="/static/intro.mp4" poster="/static/intro-poster.jpg" muted playsinline preload="auto"></video>
+    <button id="introSkip" type="button" class="intro-skip">跳过片头 →</button>
+  </div>
+  <script src="/static/intro.js" defer></script>
+  <script src="/static/page-transitions.js" defer></script>
+</body>
+</html>

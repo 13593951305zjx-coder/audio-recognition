@@ -1,0 +1,4 @@
+/* Source for the offline cover stylesheet. Rebuild with Tailwind CSS 3.4.17. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

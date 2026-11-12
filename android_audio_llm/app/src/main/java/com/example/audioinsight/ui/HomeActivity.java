@@ -1,0 +1,12 @@
+package com.example.audioinsight.ui;
+import android.os.Bundle;
+import android.graphics.Typeface;
+import android.widget.*;
+import com.example.audioinsight.data.*;
+import java.util.List;
+public class HomeActivity extends UiActivity {
+    private LinearLayout recent;private TextView count;
+    @Override public void onCreate(Bundle state){super.onCreate(state);page("听见 · 重点","把录音变成可以回看的知识",false,0);LinearLayout hero=card();android.graphics.drawable.GradientDrawable gradient=new android.graphics.drawable.GradientDrawable(android.graphics.drawable.GradientDrawable.Orientation.TL_BR,new int[]{0xff41356b,0xff1b3946});gradient.setCornerRadius(dp(20));hero.setBackground(gradient);TextView tag=text("YOUR VOICE, ORGANIZED",10,CYAN);tag.setLetterSpacing(.12f);hero.addView(tag);TextView h=text("专注聆听\n重点交给我们",29,INK);h.setTypeface(null,Typeface.BOLD);h.setPadding(0,dp(14),0,dp(12));hero.addView(h);hero.addView(text("课堂、会议、访谈\n录下声音，整理转写、摘要与待办。",14,0xffd1d7e9));pair(hero,"●  开始录音",v->open(RecordActivity.class),"＋  导入文件",v->open(ImportActivity.class));LinearLayout flow=card();flow.addView(text("01  录制 / 导入   →   02  智能整理   →   03  回看",11,CYAN));count=note("正在读取本机记录…");LinearLayout line=row();TextView title=text("最近记录",18,INK);title.setTypeface(null,Typeface.BOLD);line.addView(title,new LinearLayout.LayoutParams(0,-2,1));TextView more=text("查看全部 ›",13,CYAN);more.setMinHeight(dp(48));more.setGravity(android.view.Gravity.CENTER);more.setOnClickListener(v->open(HistoryActivity.class));line.addView(more);body.addView(line);recent=column();body.addView(recent);addButton(body,"使用指南与课程功能",false,v->open(AboutActivity.class));}
+    @Override protected void onResume(){super.onResume();load();}@Override protected void onRecordsChanged(){load();}
+    private void load(){if(recent==null)return;repo.loadRecords("",false,new Callback<List<RecordInfo>>(){public void onSuccess(List<RecordInfo> records){if(isFinishing())return;recent.removeAllViews();int complete=0;for(RecordInfo r:records)if(r.hasResult())complete++;count.setText("本机保存 "+records.size()+" 条记录  ·  已完成 "+complete+" 条");if(records.isEmpty()){LinearLayout empty=column();empty.setPadding(dp(16),dp(24),dp(16),dp(24));recent.addView(empty);empty.addView(text("还没有录音记录",16,INK));empty.addView(text("开始一段录音，或导入手机里的音频与视频。",13,MUTED));}else for(int i=0;i<Math.min(3,records.size());i++)recordCard(recent,records.get(i),false);}public void onError(String m){count.setText("读取记录失败："+m);}});}
+}

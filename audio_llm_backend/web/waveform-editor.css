@@ -1,0 +1,49 @@
+.waveform-editor { margin: 15px 0; border: 1px solid rgba(147, 192, 226, .3); border-radius: 13px; background: rgba(8, 20, 43, .48); }
+.waveform-editor > summary { cursor: pointer; padding: 14px; color: #d9e9ff; font-size: 13px; font-weight: 600; }
+.waveform-summary-hint { font-size: 10px; color: #a4bdd9; font-weight: 400; margin-left: 14px; }
+.waveform-editor-body { padding: 0 14px 15px; }
+.waveform-status, .waveform-guide, .waveform-draft-note, .waveform-footnote, .waveform-sub-body > small { color: #b0c3df; font-size: 11px; line-height: 1.8; margin: 9px 0; }
+.waveform-error { color: #ffc4a8; font-size: 12px; line-height: 1.8; overflow-wrap: anywhere; }
+.waveform-recovery { border: 1px solid rgba(242, 191, 134, .4); border-radius: 8px; padding: 10px; }
+.waveform-recovery p { color: #edc99f; font-size: 11px; line-height: 1.8; overflow-wrap: anywhere; }
+.waveform-toolbar, .waveform-actions, .waveform-time-fields { display: flex; gap: 10px 15px; align-items: end; flex-wrap: wrap; margin: 10px 0; }
+.waveform-toolbar label:first-child { flex: 1; min-width: 140px; }
+.waveform-editor label { display: grid; gap: 6px; color: #b9cce4; font-size: 11px; }
+.waveform-editor select, .waveform-editor input, .waveform-editor textarea { border: 1px solid rgba(149, 184, 225, .35); border-radius: 7px; padding: 8px; background: rgba(4, 14, 33, .74); color: #edf5ff; min-width: 0; font: inherit; font-size: 12px; }
+.waveform-editor select { width: 100%; max-width: 100%; }
+.waveform-editor input { width: 130px; }
+.waveform-editor textarea { width: 100%; resize: vertical; line-height: 1.9; }
+.waveform-editor .text-button { font-size: 11px; }
+.waveform-viewport { overflow-x: auto; border: 1px solid rgba(137, 190, 222, .3); border-radius: 9px; background: rgba(2, 10, 24, .72); padding: 5px 0; }
+.waveform-svg { display: block; touch-action: pan-y; user-select: none; }
+.waveform-grid { stroke: rgba(155, 183, 217, .15); stroke-width: 1; }
+.waveform-tick { fill: #a9bdd9; font-size: 10px; }
+.waveform-baseline { stroke: rgba(161, 217, 235, .28); }
+.waveform-amplitude { fill: rgba(108, 211, 228, .65); }
+.waveform-segment { fill: rgba(111, 102, 183, .4); stroke: rgba(181, 162, 237, .5); }
+.waveform-segment.selected { fill: rgba(154, 120, 235, .7); stroke: #dac5ff; }
+.waveform-segment-label { fill: #f2eaff; font-size: 11px; }
+.waveform-region { cursor: pointer; }
+.waveform-region:focus .waveform-segment { stroke: #fff; stroke-width: 2; }
+.waveform-selected-range { fill: rgba(141, 117, 220, .14); stroke: rgba(200, 175, 255, .7); }
+.waveform-handle { cursor: ew-resize; touch-action: none; }
+.waveform-handle line { stroke-width: 2; }
+.waveform-handle.start line, .waveform-handle.start rect:not([fill]) { stroke: #88efd1; fill: #88efd1; }
+.waveform-handle.end line, .waveform-handle.end rect:not([fill]) { stroke: #ffb5b5; fill: #ffb5b5; }
+.waveform-handle:focus { outline: none; }
+.waveform-handle:focus line { stroke-width: 4; }
+.waveform-split-line { stroke: #ffe29d; stroke-width: 1.5; stroke-dasharray: 4 4; }
+.waveform-playhead { stroke: #fff; stroke-width: 1; }
+.waveform-split, .waveform-merge { margin-top: 13px; border-top: 1px solid rgba(158, 187, 224, .24); padding-top: 12px; }
+.waveform-split > summary, .waveform-merge > summary { font-size: 12px; color: #d0c1fb; cursor: pointer; }
+.waveform-sub-body { display: grid; gap: 10px; padding-top: 12px; }
+.waveform-sub-body > button { justify-self: start; }
+.waveform-split-texts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.waveform-next-text, .waveform-merge-warning { font-size: 11px; color: #bccde3; line-height: 1.8; margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.waveform-merge-warning { color: #f1d0a5; }
+.waveform-edited-badge { color: #a1dfe8; font-size: 10px; padding: 2px 5px; border: 1px solid rgba(148, 216, 230, .3); border-radius: 5px; }
+.transcript-draft-recovery { margin: 12px 0; padding: 12px; border: 1px solid rgba(245, 185, 131, .4); border-radius: 9px; }
+.transcript-draft-recovery p { color: #f1cfab; font-size: 11px; line-height: 1.8; }
+.transcript-draft-recovery > div { display: grid; gap: 8px; margin-top: 10px; }
+.transcript-draft-recovery textarea { width: 100%; padding: 9px; color: #e9f1ff; background: rgba(4, 14, 33, .8); border: 1px solid rgba(156, 187, 225, .3); border-radius: 7px; }
+@media (max-width: 560px) { .waveform-split-texts { grid-template-columns: 1fr; } .waveform-summary-hint { display: block; margin: 5px 0 0 15px; } }

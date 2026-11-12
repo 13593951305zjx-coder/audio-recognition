@@ -1,0 +1,19 @@
+{
+  "segmentIndices": [
+    0,
+    4,
+    5,
+    9,
+    19
+  ],
+  "segmentCount": 5,
+  "sourceText": "不求周二无敌相差获取选数不能马上开战\n看期度要激动 只要红军不同国民党政府的改编\n听谱我党的要钱 届时愿意停止内战\n好,国党会训组考虑。\n坚持愿人和担保兑现实",
+  "start": 0.14,
+  "end": 73.1,
+  "summary": "不求周二无敌，看期度要激动，听谱我党的要钱。",
+  "keyPoints": [],
+  "taskId": "a81b9bcaa46a42bc84d182a010c7cbed",
+  "sourceHash": "1b47e99d06570e0cd9c49b469693f8879133173c725c0d2bc324e53e5d5fa396",
+  "model": "qwen2.5:3b",
+  "createdAt": "2026-10-26T04:59:13.067490+00:00"
+}

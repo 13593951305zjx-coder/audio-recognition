@@ -1,0 +1,20 @@
+{
+  "segmentIndices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "segmentCount": 6,
+  "sourceText": "糟糕的 早知道不戴字笔的头了 啥都听不到啊\n这 附近没 没了吧\n有个人鸡盒 先吃一次\n谁 谁啊\n唉 牛 毛 不会有鬼吧\n啊啊啊啊啊啊",
+  "start": 1.1,
+  "end": 28.05,
+  "summary": "有人在附近吃了东西，怀疑是鬼，但又觉得不可能。",
+  "keyPoints": [],
+  "taskId": "28e79fb4ce354acdb3df7476f9149203",
+  "sourceHash": "fb66d9f115bf61450d6bfa832bda7f3febb85ab56ee4408fd201edfbba6e2686",
+  "model": "qwen2.5:3b",
+  "createdAt": "2026-10-25T11:02:35.276250+00:00"
+}

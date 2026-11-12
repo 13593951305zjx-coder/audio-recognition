@@ -1,0 +1,31 @@
+{
+  "segmentIndices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "segmentCount": 13,
+  "sourceText": "For me, it's pain.\nHe did about everything he said.\nThat's basketball, that's life.\nThe last few years in Indiana.\nMy best years.\nTyrese has an iron will.\nHe's unafraid.\nHe reminds me a lot of Reggie.\nThere's definitely a lot of Reggie moments in this building.\nI'm just trying to create some of my own.\nThe same way that kids and fans looked up to him when he was here.\nThey can look at me the same way.\n祝你生日快乐",
+  "start": 0.76,
+  "end": 32.83,
+  "summary": "他做到了他说的每件事。这是篮球，也是生活。在印第安纳州的最后几年。",
+  "keyPoints": [
+    "他做到了他说的每件事",
+    "这是篮球，也是生活",
+    "在印第安纳州的最后几年"
+  ],
+  "taskId": "41aa45270ec54760bf91cadee1fc7cdb",
+  "sourceHash": "ea13aa608fe235bc9e32d6388c4f8cfc9405d91cfb101397a4a134bc63e5ae7c",
+  "model": "qwen2.5:3b",
+  "createdAt": "2026-11-03T06:27:03.120889+00:00"
+}

@@ -1,0 +1,93 @@
+/* Shared viewport layer: independent of document height and page fade effects. */
+html {
+  min-height: 100%;
+  isolation: isolate;
+  background-color: #060b19;
+}
+
+html::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: url('/static/assets/audio-insight-background-v1.png') center center / cover no-repeat;
+}
+
+html body,
+html body.grid-bg,
+html[data-theme] body {
+  min-height: 100vh;
+  background-color: transparent;
+  background-image: none;
+}
+
+/* Translucent surfaces keep the wallpaper visible behind the workspace. */
+.card, .readiness {
+  background: rgba(17, 30, 53, .28);
+  border-color: rgba(169, 198, 234, .28);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, .2);
+}
+.history-item,
+.transcript-entry,
+.info-block,
+.speaker-stats-overview > div,
+.speaker-stat-row,
+.stat-window,
+.pitch-metrics div,
+#pitch-panel canvas {
+  background: rgba(5, 15, 34, .36);
+  border-color: rgba(149, 183, 229, .24);
+}
+.history-item:hover { background: rgba(24, 43, 73, .45); border-color: rgba(103, 221, 239, .62); }
+.transcript-entry.is-playing { background: rgba(98, 66, 157, .3); }
+.transcript-entry.needs-review { background: rgba(112, 71, 22, .28); }
+.record-box { background: rgba(38, 28, 78, .18); }
+.file-drop, .mic-monitor, .live-preview, .speaker-settings, .source-player { background: rgba(7, 21, 43, .32); }
+.file-drop:hover { background: rgba(29, 52, 85, .4); }
+.keyword-inputs input, .keyword-inputs select,
+.history-toolbar input, .history-toolbar select,
+.speaker-name-row input, .speaker-preset,
+.history-dropdown-trigger {
+  background: rgba(5, 17, 38, .5);
+  border-color: rgba(159, 190, 230, .3);
+}
+.history-dropdown-trigger:hover, .history-dropdown-trigger[aria-expanded="true"] { background: rgba(22, 44, 72, .64); }
+.history-dropdown-menu { background: rgba(10, 24, 46, .94); backdrop-filter: blur(12px); }
+.history-item strong, .history-title, .card h2 { text-shadow: 0 1px 5px rgba(0, 0, 0, .65); }
+.history-item p, .history-meta { color: #c1cfe3; }
+.hero, html[data-theme="violet"] .hero, html[data-theme="light"] .hero {
+  background: linear-gradient(120deg, rgba(10, 29, 51, .4), rgba(24, 20, 58, .26));
+  backdrop-filter: blur(4px);
+}
+.topbar, html[data-theme="light"] .topbar { background: rgba(6, 11, 25, .64); }
+body.grid-bg, body.grid-bg.theme-violet, body.grid-bg.theme-light {
+  --card-bg: rgba(11, 22, 45, .34);
+  --text-main: #f8fafc;
+  --text-muted: #a4b5d0;
+}
+body.grid-bg .glass-card { backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
+
+/* The fixed dark image needs light text even when the light accent preset is used. */
+html[data-theme="light"] .hero h1,
+body.theme-light .title-gradient {
+  background: linear-gradient(95deg, #fff 5%, #78e7f3 55%, #c5a4ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+html[data-theme="light"] .hero-copy { color: #c4d2e8; }
+html[data-theme="light"] .flow span { color: #e0f5ff; background: rgba(33, 73, 105, .23); }
+body.theme-light #displayAuthor,
+body.theme-light #displayCourse { color: #e2ebf9; }
+body.theme-light #displayBadge,
+body.theme-light #displaySubtitle,
+body.theme-light #displayEngine,
+body.theme-light #architectureSection h2,
+body.theme-light .cover-example-heading { color: #8ee7f4; }
+body.theme-light .cover-demo-note { color: #b4c5dd; }
+
+footer { color: #b1c3dc; text-shadow: 0 1px 4px #060b19; }

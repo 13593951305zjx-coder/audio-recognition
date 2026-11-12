@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#060b19" />
+    <title>Audio Insight · 音频识别工作台</title>
+    <link rel="icon" href="/static/favicon.svg" />
+    <link rel="stylesheet" href="/static/vendor/animate.min.css" />
+    <link rel="stylesheet" href="/static/styles.css?v=result-tabs-20261025" />
+    <link rel="stylesheet" href="/static/workspace-theme.css?v=result-tabs-20261025" />
+    <link rel="stylesheet" href="/static/page-transitions.css" />
+    <link rel="stylesheet" href="/static/fixed-background.css?v=transparent-panels-v2" />
+    <link rel="stylesheet" href="/static/audio-features.css?v=dual-summary-v2" />
+    <link rel="stylesheet" href="/static/speaker-organizer.css?v=20261026-v1" />
+    <link rel="stylesheet" href="/static/transcript-editor.css?v=20261026-v1" />
+    <link rel="stylesheet" href="/static/batch-queue.css?v=20261026-v1" />
+    <link rel="stylesheet" href="/static/waveform-editor.css?v=20261026-v2" />
+    <script>try { document.documentElement.dataset.theme = localStorage.getItem('audio-insight-theme') || 'cyber'; } catch (_) { document.documentElement.dataset.theme = 'cyber'; }</script>
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark">●</div>
+          <div><strong>AUDIO INSIGHT</strong><span>智能音频识别与重要信息提取</span></div>
+        </div>
+        <div class="topbar-actions"><a class="cover-return" href="/">返回封面</a><div class="local-pill"><i id="health-dot"></i><span id="health-text">连接检测中</span></div></div>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div>
+            <p class="eyebrow">音频 · 转写 · 重点 · 音高</p>
+            <h1>把一段录音，变成可回看的信息。</h1>
+            <p class="hero-copy">录音或选择文件，由本地 Whisper 转成文字，Ollama 提取摘要与待办，librosa 分析音高。原始音频、文字和结果一起保存在本机。</p>
+          </div>
+          <div class="flow" aria-label="处理流程"><span>音频</span><b>→</b><span>完整转写</span><b>→</b><span>重要信息</span></div>
+        </section>
+
+        <details class="readiness" id="readiness-panel"><summary id="readiness-summary">正在检查本地模型和音频分析环境…</summary><div id="readiness-content" aria-live="polite"></div><button class="text-button" id="refresh-health" type="button">重新检查环境</button></details>
+
+        <section class="workspace-grid">
+          <article class="card capture-card">
+            <div class="card-heading"><div><p class="label">01 / INPUT</p><h2>添加音频</h2></div><span class="tag">仅本机访问</span></div>
+            <div class="record-source-controls"><label for="record-source">录音来源</label><select id="record-source"><option value="microphone">仅麦克风</option><option value="mixed">电脑声音＋麦克风</option><option value="system">仅电脑声音</option></select><p id="record-source-hint"></p></div>
+            <div class="record-box" id="record-box">
+              <div class="record-icon" id="record-icon">●</div>
+              <strong id="record-title">录一段新的音频</strong>
+              <span id="record-hint">浏览器会请求麦克风权限，录音文件只上传到本机服务。</span>
+              <div class="mic-monitor" id="mic-monitor" hidden>
+                <div class="mic-monitor-heading"><span>录音音量</span><span id="mic-level-label">等待声音</span></div>
+                <div class="mic-track" id="mic-track" role="meter" aria-label="麦克风音量" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="mic-level-bar"></span></div>
+                <p class="mic-silence" id="mic-silence" role="status">当前检测不到声音</p>
+              </div>
+              <label class="live-toggle"><input id="live-enabled" type="checkbox" checked />边录音边显示文字</label>
+              <button class="primary-button" id="record-button" type="button">开始录音</button>
+              <span class="timer" id="record-timer">00:00</span>
+            </div>
+            <section class="live-preview" id="live-preview" aria-label="录音实时转写" hidden><div class="live-heading"><strong>实时文字</strong><span id="live-status" role="status">等待录音</span></div><p class="live-note">约每 4 秒更新一次，首次加载模型可能稍慢。此处为临时预览；停录后点击“上传并识别”保存完整结果。</p><p id="live-error" class="error-text" role="alert" hidden></p><ol id="live-lines" aria-live="polite" aria-relevant="additions"><li class="live-empty">开始说话后，识别文字会显示在这里。</li></ol><button class="text-button" id="copy-live" type="button" disabled>复制实时文字</button></section>
+            <div class="or-divider"><span>或</span></div>
+            <label class="file-drop" for="audio-file"><span class="upload-symbol">＋</span><strong>选择本地音频或视频文件（可多选）</strong><small>单次最多 20 个，上传后依次识别；支持 mp3、wav、m4a、aac、ogg、webm、mp4、flac</small><input id="audio-file" type="file" multiple accept="audio/*,video/mp4,.mp3,.wav,.m4a,.aac,.ogg,.webm,.mp4,.flac,.mpeg,.mpga" /></label>
+            <div class="selected-file" id="selected-file"><span class="file-badge">音频</span><span>还没有选择文件</span></div>
+            <ul class="batch-staging" id="batch-staging" aria-label="待上传的文件" hidden></ul>
+            <button class="submit-button" id="submit-button" type="button" disabled>上传并识别 <span>↗</span></button>
+            <p class="error-text" id="error-text" role="alert"></p>
+            <section class="batch-queue" id="batch-queue" aria-label="批量识别队列" hidden><div class="batch-queue-heading"><h3>识别队列</h3><span id="batch-queue-summary" role="status">正在读取队列…</span></div><div class="batch-queue-actions"><button type="button" class="text-button" id="batch-queue-current" disabled>查看当前任务</button><button type="button" class="text-button" id="batch-queue-refresh">刷新队列</button></div><p class="batch-queue-note">逐个处理，失败后继续下一项。已上传的文件由本地服务处理，切换记录或关闭页面不影响队列。刷新前请先上传所选文件。</p><p class="error-text" id="batch-queue-error" role="alert"></p><ol class="batch-queue-list" id="batch-queue-list" aria-label="识别任务列表"></ol><small class="batch-queue-note">显示全部排队任务和最近 20 条已结束任务；完整结果保存在历史记录中。</small></section>
+          </article>
+
+          <article class="card result-card">
+            <div class="card-heading"><div><p class="label">02 / RESULT</p><h2>识别结果</h2></div><span class="state" id="result-state">待处理</span></div>
+            <p class="result-message" id="result-message" role="status" aria-live="polite">选择一段音频后开始处理。</p>
+            <p class="result-notices" id="result-notices" hidden></p>
+            <div class="summary-actions"><button class="summary-button" id="retry-summary" type="button" disabled>重新提取重点</button><span id="summary-retry-hint">已有转写文字后，可以单独提取重点。</span></div>
+            <div class="export-actions"><button class="text-button" id="export-text" type="button" disabled>导出文字 TXT</button><button class="text-button" id="export-csv" type="button" disabled>导出音高 CSV</button><button class="text-button" id="export-png" type="button" disabled>保存统计图 PNG</button></div>
+            <div class="keyword-tools"><label for="keyword-search">关键词搜索</label><div class="keyword-inputs"><input id="keyword-search" type="search" maxlength="120" placeholder="输入人名、术语或一句话" autocomplete="off" /><select id="keyword-scope" aria-label="搜索范围"><option value="current">当前记录</option><option value="all">全部历史</option></select><button class="text-button" id="clear-search" type="button">清空</button></div></div>
+            <section class="source-player" id="source-player" aria-label="原始音视频播放器" hidden><div class="source-heading"><strong id="source-title">原始音视频</strong></div><video id="source-video" controls playsinline preload="metadata" hidden></video><audio id="segment-audio" controls preload="metadata" hidden></audio><p id="source-caption" class="source-caption" role="status">点击转写句子即可定位播放。</p><p id="source-error" class="error-text" role="alert" hidden></p></section>
+            <div class="result-tabs"><button class="tab active" data-tab="transcript" type="button">完整转写</button><button class="tab" data-tab="review" type="button" id="review-tab">待核对</button><button class="tab" data-tab="important" type="button">重要信息</button><button class="tab" data-tab="speaker-stats" type="button">发言统计</button><button class="tab" data-tab="pitch" type="button">音高统计</button><button class="tab" data-tab="search" type="button">搜索结果</button></div>
+            <div class="tab-panel" id="search-panel" hidden><p id="search-summary" class="search-summary" role="status">输入关键词，可搜索当前记录或全部历史转写。</p><ol id="search-results" class="transcript-list search-results" aria-label="关键词搜索结果" hidden></ol></div>
+            <div class="tab-panel active" id="transcript-panel"><div class="speaker-tools"><button class="summary-button" id="identify-speakers" type="button" disabled>区分说话人</button><span id="speaker-hint">区分后可给每组设置男生A、女生A等称呼。</span></div><details class="speaker-settings" id="speaker-settings" hidden><summary id="speaker-settings-title">说话人称呼</summary><div id="speaker-name-fields"></div><button class="summary-button" id="save-speaker-labels" type="button">保存称呼</button></details><div class="empty-result" id="transcript-empty"><span>◌</span><strong>上传音频后，完整转写会显示在这里</strong><small>每条文字会按时间顺序列出，并标注对应音视频时间段。</small></div><p class="transcript-caption" id="transcript-caption" hidden></p><ol class="transcript-list" id="transcript" aria-label="按时间排列的转写内容" hidden></ol><button class="text-button" id="copy-button" type="button" hidden>复制转写</button></div>
+            <div class="tab-panel" id="review-panel" hidden><div class="review-toolbar"><button class="summary-button" id="check-review" type="button" disabled>检查模糊片段</button><span id="review-summary" role="status">有转写结果后，可检查需要复听的片段。</span></div><p class="review-note">橙色文字表示模型对这些词语的识别把握较低。待核对不代表一定有错；未标记也不保证正确。点击小喇叭可听原声。</p><p class="review-error" id="review-error" role="alert" hidden></p><div class="empty-result" id="review-empty"><span>◌</span><strong id="review-empty-text">上传音频后，可疑片段会单独列在这里</strong></div><ol class="transcript-list review-list" id="review-list" aria-label="需要核对的转写片段" hidden></ol></div>
+            <div class="tab-panel" id="important-panel" hidden><div class="empty-result" id="important-empty"><span>✦</span><strong>大模型提取的重点会显示在这里</strong><small>摘要、关键词、事实、决定、待办和问题。</small></div><div id="important-content" hidden></div></div>
+            <div class="tab-panel" id="speaker-stats-panel" hidden>
+              <div class="empty-result" id="speaker-stats-empty"><span>◉</span><strong id="speaker-stats-empty-title">区分说话人后，这里会显示发言统计</strong><small id="speaker-stats-empty-hint">可在“完整转写”中区分说话人，也可点击下方按钮。</small><button class="summary-button" id="speaker-stats-start" type="button" disabled>区分说话人</button></div>
+              <div id="speaker-stats-content" hidden>
+                <div class="speaker-stats-overview"><div><span>累计发言时长（含重叠）</span><strong id="speaker-stats-total">—</strong></div><div><span>说话人分组</span><strong id="speaker-stats-count">—</strong></div></div>
+                <details class="stat-window" id="speaker-share-window" open>
+                  <summary class="collapsible-summary"><h3>各说话人发言占比</h3><span class="collapse-state" aria-hidden="true"></span></summary>
+                  <div class="stat-window-body"><div class="stat-window-actions"><button class="text-button" id="export-speaker-stats" type="button">导出 CSV</button></div><div class="speaker-stats-list" id="speaker-stats-list" role="list"></div></div>
+                </details>
+                <details class="stat-window speaker-pie-section" id="speaker-stats-pie-section" open hidden>
+                  <summary class="collapsible-summary"><h3>发言占比饼状图</h3><span class="collapse-state" aria-hidden="true"></span></summary>
+                  <div class="stat-window-body" id="speaker-stats-pie"></div>
+                </details>
+                <p class="chart-note" id="speaker-stats-note"></p>
+              </div>
+            </div>
+            <div class="tab-panel" id="pitch-panel" hidden><div class="empty-result" id="pitch-empty"><span>⌁</span><strong id="pitch-empty-text">上传音频后，这里会显示音高变化</strong><small>由本机 librosa 分析基频；停顿和无声片段保留为空白。</small></div><div id="pitch-content" hidden><div class="pitch-metrics"><div><span>最低</span><strong id="pitch-min">—</strong></div><div><span>平均</span><strong id="pitch-avg">—</strong></div><div><span>最高</span><strong id="pitch-max">—</strong></div><div><span>中位数</span><strong id="pitch-median">—</strong></div><div><span>有声占比</span><strong id="pitch-voiced">—</strong></div><div><span>音频时长</span><strong id="pitch-duration">—</strong></div></div><h3 class="chart-title">音高随时间变化</h3><canvas id="pitch-chart" role="img" aria-label="音高随时间变化图"></canvas><h3 class="chart-title">音高分布</h3><canvas id="pitch-histogram" role="img" aria-label="音高频率分布柱状图"></canvas><p class="chart-note" id="pitch-method"></p></div></div>
+          </article>
+        </section>
+
+        <details class="card history-card" id="history-section" open>
+          <summary class="collapsible-summary history-summary"><span><span class="label">03 / HISTORY</span><span class="history-title">历史记录</span></span><span class="collapse-state" aria-hidden="true"></span></summary>
+          <div class="history-body"><div class="history-toolbar"><input id="history-search" type="search" placeholder="搜索名称、标签或文字" aria-label="搜索历史记录" /><select id="history-filter" aria-label="筛选历史记录"><option value="all">全部记录</option><option value="favorite">只看收藏</option></select><select id="history-sort" aria-label="历史记录排序"><option value="newest">最新在前</option><option value="oldest">最早在前</option><option value="name">按名称排序</option></select><button class="text-button" id="refresh-history" type="button">刷新</button></div><p class="history-count" id="history-count" role="status"></p><div class="history-list" id="history-list"><div class="history-empty">还没有识别记录</div></div></div>
+        </details>
+      </main>
+      <footer>Audio Insight · 只绑定 127.0.0.1 · <span id="footer-address">本机浏览器</span></footer>
+    </div>
+    <div class="toast" id="toast" role="status"></div>
+    <script src="/static/source-player.js" defer></script>
+    <script src="/static/live-capture.js" defer></script>
+    <script src="/static/audio-input.js?v=dual-summary-v2" defer></script>
+    <script src="/static/fragment-summary.js?v=waveform-20261026-v2" defer></script>
+    <script src="/static/transcript-editor.js?v=waveform-20261026-v2" defer></script>
+    <script src="/static/waveform-editor.js?v=20261026-v2" defer></script>
+    <script src="/static/batch-queue.js?v=20261026-v1" defer></script>
+    <script src="/static/speaker-organizer.js?v=20261026-v1" defer></script>
+    <script src="/static/speaker-stats.js?v=waveform-20261026-v2" defer></script>
+    <script src="/static/app.js?v=waveform-20261026-v2" defer></script>
+    <script src="/static/result-tabs.js" defer></script>
+    <script src="/static/history-dropdowns.js" defer></script>
+    <script src="/static/page-transitions.js" defer></script>
+  </body>
+</html>
